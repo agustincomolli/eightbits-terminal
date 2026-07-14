@@ -14,15 +14,15 @@ def main() -> None:
     name = Input.text("Ingresa tu nombre: ", Colors.GREEN, Colors.BLUE)
     Output.print(name, Colors.WHITE)
 
-    age = Input.int_number("Ingresa tu edad: ",
+    age = Input.integer("Ingresa tu edad: ",
                            Colors.GREEN, Colors.BLUE, 1, 99)
     Output.print(age, Colors.WHITE)
 
-    weight = Input.float_number(
+    weight = Input.float(
         "Ingresa tu peso: ", Colors.GREEN, Colors.BLUE, 50, 150)
     Output.print(weight, Colors.WHITE)
 
-    next_step = Input.yes_no(
+    next_step = Input.confirm(
         "¿Deseas continuar? (si/no): ", Colors.GREEN, Colors.BLUE)
     Output.print(next_step, Colors.WHITE)
 
@@ -37,14 +37,14 @@ def main() -> None:
                               Colors.GREEN, Colors.BLUE)
     Output.print(password, Colors.WHITE)
 
-    choice = Input.menu("Selecciona una opción: ",
+    choice = Input.choice("Selecciona una opción: ",
                         ["Opción 1", "Opción 2", "Opción 3"],
                         Colors.GREEN, Colors.BLUE)
     Output.print(choice, Colors.WHITE)
 
     # Salida formateada
-    Output.show_warning("Esto es un mensaje de advertencia.")
-    Output.show_error("Esto es un mensaje de error.")
+    Output.warning("Esto es un mensaje de advertencia.")
+    Output.error("Esto es un mensaje de error.")
     Output.confirm("Esto es un mensaje de confirmación.")
     Output.clear()
     Output.print("Esto es un mensaje de limpieza.", Colors.RED)
@@ -71,10 +71,10 @@ def main() -> None:
     ]
 
     # Usar el método estático directamente
-    Tabular.tabulate(data, title="Lista de Usuarios")
+    Tabular.print(data, title="Lista de Usuarios")
 
     # O especificar un ancho máximo
-    Tabular.tabulate(data, title="Lista de Usuarios", max_width=80)
+    Tabular.print(data, title="Lista de Usuarios", max_width=80)
 
     # Barra de progreso
     total_iterations = 100
@@ -83,7 +83,7 @@ def main() -> None:
         time.sleep(0.1)
 
     # Efecto de máquina de escribir
-    Output.typewriter_effect("Esto es un efecto de máquina de escribir.")
+    Output.typewriter("Esto es un efecto de máquina de escribir.")
 
     # Formateo de números
     Output.print(f"Número entero formateado: {Output.format_int(1000)}", Colors.WHITE)

@@ -17,8 +17,13 @@ class Tabular:
     """
     MIN_COLUMN_WIDTH = 10
 
+    def __new__(cls):
+        raise TypeError(
+            "Output is a static utility class and cannot be instantiated."
+        )
+
     @staticmethod
-    def tabulate(data: list, title: str = "", max_width: int = 0):
+    def print(data: list, title: str = "", max_width: int = 0):
         """
         Genera una tabla en la consola a partir de una lista de diccionarios,
         ajustando el contenido al ancho disponible.
@@ -34,7 +39,7 @@ class Tabular:
             return
 
         # Configurar el ancho máximo
-        max_width = max_width or Output.get_console_size()[0]
+        max_width = max_width or Output.console_size()[0]
 
         header = Tabular._get_header(data[0])
         initial_widths = Tabular._get_initial_widths(data)

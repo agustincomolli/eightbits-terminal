@@ -16,21 +16,21 @@ def test_clear(monkeypatch):
     # Expected output: Console is cleared
 
 
-def test_get_console_size(monkeypatch):
-    """Test para la función get_console_size."""
+def test_console_size(monkeypatch):
+    """Test para la función console_size."""
     monkeypatch.setattr('os.get_terminal_size',
                         lambda: os.terminal_size((80, 24)))
-    size = Output.get_console_size()
+    size = Output.console_size()
     assert isinstance(size, tuple)
     assert len(size) == 2
 
 
-def test_show_warning(monkeypatch):
-    """Test para la función show_warning."""
+def test_warning(monkeypatch):
+    """Test para la función warning."""
     monkeypatch.setattr('builtins.input', lambda _: 's')
-    assert Output.show_warning("This is a warning message") is True
+    assert Output.warning("This is a warning message") is True
     monkeypatch.setattr('builtins.input', lambda _: 'n')
-    assert Output.show_warning("This is a warning message") is False
+    assert Output.warning("This is a warning message") is False
 
 
 def test_confirm(monkeypatch):
@@ -41,10 +41,10 @@ def test_confirm(monkeypatch):
     assert Output.confirm("Are you sure?") is False
 
 
-def test_typewriter_effect(monkeypatch, capsys):
+def test_typewriter(monkeypatch, capsys):
     """Test para el efecto de escritura."""
     monkeypatch.setattr('time.sleep', lambda _: None)
-    Output.typewriter_effect("Typing effect")
+    Output.typewriter("Typing effect")
     captured = capsys.readouterr()
     assert "Typing effect" in captured.out
 

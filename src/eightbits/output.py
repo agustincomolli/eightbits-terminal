@@ -15,6 +15,12 @@ from .alignment import Alignment
 
 class Output:
     """Clase que contiene las funciones para imprimir texto con colores."""
+
+    def __new__(cls):
+        raise TypeError(
+            "Output is a static utility class and cannot be instantiated."
+        )
+
     @staticmethod
     def print(text: object, color: str = Colors.DEFAULT,
               alignment: str = Alignment.LEFT, width: int = 0) -> None:
@@ -35,7 +41,7 @@ class Output:
         text = Colors.colorize(str(text), color)
 
         if width == 0:
-            width = Output.get_console_size()[0]
+            width = Output.console_size()[0]
 
         if alignment == Alignment.CENTER:
             print(text.center(width))
@@ -50,7 +56,7 @@ class Output:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def get_console_size() -> tuple[int, int]:
+    def console_size() -> tuple[int, int]:
         """Obtiene el tamaño de la consola.
 
         Returns:
@@ -69,7 +75,7 @@ class Output:
             f"Presione {Colors.colorize('ENTER', Colors.YELLOW)} para continuar...")
 
     @staticmethod
-    def show_error(message: str) -> None:
+    def error(message: str) -> None:
         """Muestra un mensaje de error.
 
         Args:
@@ -78,7 +84,7 @@ class Output:
         Output.print(message, Colors.RED)
 
     @staticmethod
-    def show_warning(message: str) -> bool:
+    def warning(message: str) -> bool:
         """Muestra un mensaje de advertencia.
 
         Args:
@@ -113,7 +119,7 @@ class Output:
             return False
 
     @staticmethod
-    def typewriter_effect(text: str) -> None:
+    def typewriter(text: str) -> None:
         """Imprime los caracteres de la cadena de texto uno por uno en un intervalo de
         tiempo determinado para simular el efecto de que se está escribiendo en tiempo
         real.

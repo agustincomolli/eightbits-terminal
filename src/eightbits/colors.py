@@ -36,6 +36,11 @@ class Colors:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
+    def __new__(cls):
+        raise TypeError(
+            "Output is a static utility class and cannot be instantiated."
+        )
+
     @staticmethod
     def validate_color(color: str) -> str:
         """

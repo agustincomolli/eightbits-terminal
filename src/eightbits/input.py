@@ -15,6 +15,12 @@ class Input:
     """
     Clase que contiene las funciones para solicitar input al usuario con colores.
     """
+
+    def __new__(cls):
+        raise TypeError(
+            "Output is a static utility class and cannot be instantiated."
+        )
+
     @staticmethod
     def text(prompt: str, color_prompt: str = Colors.DEFAULT,
              color_input: str = Colors.DEFAULT) -> str:
@@ -45,7 +51,7 @@ class Input:
         return f"{user_input}"
 
     @staticmethod
-    def int_number(prompt: str, color_prompt: str = Colors.DEFAULT,
+    def integer(prompt: str, color_prompt: str = Colors.DEFAULT,
                    color_input: str = Colors.DEFAULT,
                    min_value: int = 0, max_value: int = 0) -> int:
         """
@@ -87,7 +93,7 @@ class Input:
         return int(user_input)
 
     @staticmethod
-    def float_number(prompt: str, color_prompt: str = Colors.DEFAULT,
+    def float(prompt: str, color_prompt: str = Colors.DEFAULT,
                      color_input: str = Colors.DEFAULT,
                      min_value: float = 0, max_value: float = 0) -> float:
         """
@@ -130,7 +136,7 @@ class Input:
                 print("El valor debe ser un número con decimales.")
 
     @staticmethod
-    def yes_no(prompt: str, color_prompt: str, color_input: str) -> bool:
+    def confirm(prompt: str, color_prompt: str, color_input: str) -> bool:
         """
         Solicita un booleano al usuario mostrando el mensaje en un color y la respuesta en 
         otro color.
@@ -285,7 +291,7 @@ class Input:
             return password
 
     @staticmethod
-    def menu(title: str, options: list, color_prompt: str, color_input: str) -> int:
+    def choice(title: str, options: list, color_prompt: str, color_input: str) -> int:
         """
         Muestra un menú con las opciones especificadas y solicita al usuario que elija una opción.
 
@@ -316,5 +322,5 @@ class Input:
             # Verifica que la opción sea válida
             if choice.isdigit() and 1 <= int(choice) <= len(options):
                 return int(choice)
-            Output.show_error("\nOpción inválida, intente de nuevo.")
+            Output.error("\nOpción inválida, intente de nuevo.")
             Output.press_enter_to_continue()

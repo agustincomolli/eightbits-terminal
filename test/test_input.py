@@ -17,37 +17,37 @@ def test_text(monkeypatch):
     assert resultado == "entrada de prueba"
 
 
-def test_int_number(monkeypatch):
+def test_integer(monkeypatch):
     """
-    Prueba el método int_number de la clase Input.
+    Prueba el método integer de la clase Input.
     """
     monkeypatch.setattr('builtins.input', lambda _: "5")
-    resultado = Input.int_number(
+    resultado = Input.integer(
         "Ingrese un número: ", Colors.RED, Colors.GREEN, 1, 10)
     assert resultado == 5
 
 
-def test_float_number(monkeypatch):
+def test_float(monkeypatch):
     """
-    Prueba el método float_number de la clase Input.
+    Prueba el método float de la clase Input.
     """
     monkeypatch.setattr('builtins.input', lambda _: "5.5")
-    resultado = Input.float_number(
+    resultado = Input.float(
         "Ingrese un número flotante: ", Colors.RED, Colors.GREEN, 1.0, 10.0)
     assert resultado == 5.5
 
 
-def test_yes_no(monkeypatch):
+def test_confirm(monkeypatch):
     """
-    Prueba el método yes_no de la clase Input.
+    Prueba el método confirm de la clase Input.
     """
     monkeypatch.setattr('builtins.input', lambda _: "s")
-    resultado = Input.yes_no(
+    resultado = Input.confirm(
         "¿Está de acuerdo? (s/n): ", Colors.RED, Colors.GREEN)
     assert resultado is True
 
     monkeypatch.setattr('builtins.input', lambda _: "n")
-    resultado = Input.yes_no(
+    resultado = Input.confirm(
         "¿Está de acuerdo? (s/n): ", Colors.RED, Colors.GREEN)
     assert resultado is False
 
@@ -81,34 +81,34 @@ def test_password(monkeypatch):
     assert resultado == "Contraseña1"
 
 
-def test_menu(monkeypatch):
+def test_choice(monkeypatch):
     """
-    Prueba el método menu de la clase Input.
+    Prueba el método choice de la clase Input.
     """
     monkeypatch.setattr('builtins.input', lambda _: "1")
-    resultado = Input.menu("Elija una opción:", [
+    resultado = Input.choice("Elija una opción:", [
                            "Opción 1", "Opción 2"], Colors.RED, Colors.GREEN)
     assert resultado == 1
 
 
-def test_invalid_int_number(monkeypatch):
+def test_invalid_integer(monkeypatch):
     """
-    Prueba el manejo de entrada inválida en el método int_number de la clase Input.
+    Prueba el manejo de entrada inválida en el método integer de la clase Input.
     """
     inputs = iter(["abc", "15", "5"])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    resultado = Input.int_number(
+    resultado = Input.integer(
         "Ingrese un número: ", Colors.RED, Colors.GREEN, 1, 10)
     assert resultado == 5
 
 
-def test_invalid_float_number(monkeypatch):
+def test_invalid_float(monkeypatch):
     """
-    Prueba el manejo de entrada inválida en el método float_number de la clase Input.
+    Prueba el manejo de entrada inválida en el método float de la clase Input.
     """
     inputs = iter(["abc", "15.5", "5.5"])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    resultado = Input.float_number(
+    resultado = Input.float(
         "Ingrese un número flotante: ", Colors.RED, Colors.GREEN, 1.0, 10.0)
     assert resultado == 5.5
 
