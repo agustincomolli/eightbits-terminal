@@ -1,6 +1,6 @@
 # EightBits Terminal by 8 Bits
 
-Biblioteca Python moderna para crear interfaces CLI elegantes con colores, validación de entrada y componentes estilizados, inspirada en la era de los 8 bits 🎮✨
+Biblioteca moderna para crear aplicaciones de terminal elegantes en Python.
 
 ## 🚀 Características
 
