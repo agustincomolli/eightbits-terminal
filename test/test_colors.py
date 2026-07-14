@@ -1,5 +1,5 @@
 """
-Módulo de pruebas para la clase Colors del módulo bit8tools.colors.
+Módulo de pruebas para la clase Colors del módulo eightbits.colors.
 
 Este módulo contiene pruebas unitarias para verificar el correcto funcionamiento
 de las funciones de la clase Colors utilizando pytest.
@@ -17,7 +17,7 @@ Funciones:
 """
 
 import pytest
-from src.bit8tools.colors import Colors
+from src.eightbits.colors import Colors
 
 
 def test_colorize_red():

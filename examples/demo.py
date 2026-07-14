@@ -1,11 +1,11 @@
 """
-Ejemplo de uso de todas las funciones del proyecto bit8tools.
+Ejemplo de uso de todas las funciones del proyecto eightbits.
 
 Para ejecutar el ejemplo, ejecutar python -m examples.demo.
 """
 import time
 from datetime import datetime
-from src.bit8tools import Input, Output, Colors, Alignment, Tabular
+from src.eightbits import Input, Output, Colors, Alignment, Tabular
 
 
 def main() -> None:

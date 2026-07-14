@@ -1,4 +1,4 @@
-# bit8tools
+# 8-Bits Terminal
 
 Biblioteca Python moderna para crear interfaces CLI elegantes con colores, validación de entrada y componentes estilizados, inspirada en la era de los 8 bits 🎮✨
 
@@ -47,13 +47,13 @@ Clase para manejo de tablas en terminal:
 ## 📦 Instalación
 
 ```bash
-pip install bit8tools
+pip install eightbits-terminal
 ```
 
 ## 🎮 Ejemplo de Uso
 
 ```python
-from bit8tools import Input, Output, Colors, Alignment, Tabular
+from eightbits import Input, Output, Colors, Alignment, Tabular
 
 # Entrada de datos
 nombre = Input.text("Ingrese su nombre:", Colors.GREEN, Colors.BLUE)

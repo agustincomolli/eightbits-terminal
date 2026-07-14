@@ -1,11 +1,11 @@
 """
-Módulo de pruebas para la clase Input en bit8tools.
+Módulo de pruebas para la clase Input en eightbits.
 
 Este módulo contiene funciones de pytest para probar las funcionalidades de la clase Input.
 """
 
-from src.bit8tools.input import Input
-from src.bit8tools.colors import Colors
+from src.eightbits.input import Input
+from src.eightbits.colors import Colors
 
 
 def test_text(monkeypatch):

@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bit8tools"
-version = "1.0.8"
+name = "eightbits-terminal"
+version = "2.0"
 authors = [
   { name="Agustín Comolli", email="agustincomolli@gmail.com" },
 ]
@@ -19,7 +19,7 @@ classifiers = [
 license = { file = "LICENSE" }
 
 [tool.setuptools]
-packages = ["bit8tools"]
+packages = ["eightbits"]
 package-dir = { "" = "src" }
 include-package-data = true
 license-files = []

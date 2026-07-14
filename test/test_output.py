@@ -5,8 +5,8 @@ Pruebas unitarias para el módulo Output
 import locale
 import os
 from datetime import datetime
-from src.bit8tools.output import Output
-from src.bit8tools.colors import Colors
+from src.eightbits.output import Output
+from src.eightbits.colors import Colors
 
 
 def test_clear(monkeypatch):
