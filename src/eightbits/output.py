@@ -84,21 +84,13 @@ class Output:
         Output.print(message, Colors.RED)
 
     @staticmethod
-    def warning(message: str) -> bool:
+    def warning(message: str) -> None:
         """Muestra un mensaje de advertencia.
 
         Args:
             message (str): Mensaje de advertencia.
-
-        Returns:
-            bool: True si el usuario responde afirmativamente, False en caso contrario.
         """
-        while True:
-            response = input(f"{Colors.colorize(message, Colors.YELLOW)}\n" +
-                             "¿Desea continuar? (s/n) ").lower()
-            if response in ("s", "y"):
-                return True
-            return False
+        Output.print(message, Colors.YELLOW)
 
     @staticmethod
     def confirm(message: str) -> bool:
