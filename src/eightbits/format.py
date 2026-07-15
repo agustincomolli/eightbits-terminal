@@ -15,7 +15,7 @@ class Format:
 
     def __new__(cls):
         raise TypeError(
-            "Output is a static utility class and cannot be instantiated."
+            "Format is a static utility class and cannot be instantiated."
         )
 
     @staticmethod

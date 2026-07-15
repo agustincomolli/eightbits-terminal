@@ -19,7 +19,7 @@ class Tabular:
 
     def __new__(cls):
         raise TypeError(
-            "Output is a static utility class and cannot be instantiated."
+            "Tabular is a static utility class and cannot be instantiated."
         )
 
     @staticmethod
@@ -35,7 +35,7 @@ class Tabular:
                                      se usa el ancho de la consola.
         """
         if not data:
-            print("No hay datos para mostrar.")
+            Output.print("No hay datos para mostrar.")
             return
 
         # Configurar el ancho máximo
@@ -49,7 +49,7 @@ class Tabular:
         if title:
             total_width = sum(adjusted_widths.values()) + \
                 3 * (len(header) - 1) + 4
-            print("\n" + title.center(total_width))
+            Output.print("\n" + title.center(total_width))
 
         Tabular._generate_header(header, adjusted_widths)
         for row in data:
@@ -162,7 +162,7 @@ class Tabular:
             widths (list): Lista con los anchos de las columnas.
         """
         total_row_length = sum(widths) + 3 * (columns_count - 1)
-        print(f"+-{'-' * total_row_length}-+")
+        Output.print(f"+-{'-' * total_row_length}-+")
 
     @staticmethod
     def _print_row(row: dict, columns_width: dict, is_header: bool = False):
@@ -193,12 +193,12 @@ class Tabular:
 
         # Imprimir cada línea
         for line_num in range(max_lines):
-            print("|", end="")
+            Output.print("|", end="")
             for key, width in columns_width.items():
                 # Obtener la línea actual o espacios en blanco si no hay más contenido
                 if line_num < len(wrapped_content[key]):
                     value = wrapped_content[key][line_num]
                 else:
                     value = ""
-                print(f" {value:<{width}} |", end="")
-            print()
+                Output.print(f" {value:<{width}} |", end="")
+            Output.print()

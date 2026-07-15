@@ -21,33 +21,40 @@ class Output:
         )
 
     @staticmethod
-    def print(text: object, color: str = Colors.DEFAULT,
-              alignment: str = Alignment.LEFT, width: int = 0) -> None:
-        """Imprime un texto con un color y alineación.
+    def print(*objects: object, sep: str = ' ', end: str = '\n',
+              color: str = Colors.DEFAULT, alignment: str = Alignment.LEFT,
+              width: int = 0) -> None:
+        """Imprime objetos con un color y alineación específicos.
 
         Args:
-            text (object): Texto a imprimir.
+            *objects (object): Uno o más objetos a imprimir.
+            sep (str, optional): Separador entre objetos. Por defecto es ' '.
+            end (str, optional): Cadena final al terminar la impresión. Por defecto es '\n'.
             color (str, optional): Color a aplicar al texto.
             alignment (str, optional): Alineación del texto ('left', 'center', 'right').
-            width (int, optional): Ancho para centrar el texto. Si no se proporciona,
-            se usará el ancho de la terminal.
+            width (int, optional): Ancho para la alineación. Si es 0, usa la terminal.
         """
-        # Validar el color
+        # 1. Validar color y alineación
         color = Colors.validate_color(color)
-        # Validar la alineación
         alignment = Alignment.validate_alignment(alignment)
 
-        text = Colors.colorize(str(text), color)
+        # 2. Unir los objetos usando el separador 'sep'
+        full_text = sep.join(str(obj) for obj in objects)
 
+        # 3. Aplicar color al texto completo ya unido
+        text_color = Colors.colorize(full_text, color)
+
+        # 4. Calcular ancho de la pantalla
         if width == 0:
             width = Output.console_size()[0]
 
+        # 5. Alinear e imprimir aplicando el parámetro 'end'
         if alignment == Alignment.CENTER:
-            print(text.center(width))
+            print(text_color.center(width), end=end)
         elif alignment == Alignment.RIGHT:
-            print(text.rjust(width))
+            print(text_color.rjust(width), end=end)
         else:
-            print(text.ljust(width))
+            print(text_color.ljust(width), end=end)
 
     @staticmethod
     def clear() -> None:
@@ -107,9 +114,12 @@ class Output:
         """
         while True:
             response = input(f"{message} (s/n) ").lower()
+
             if response in ("s", "y"):
                 return True
-            return False
+
+            if response == "n":
+                return False
 
     @staticmethod
     def typewriter(text: str) -> None:
@@ -157,6 +167,15 @@ class Output:
             total (int): Número total de iteraciones.
             length (int, optional): Longitud de la barra de progreso. Por defecto es 50.
         """
+        if total <= 0:
+            raise ValueError(
+                f"'total' debe ser mayor a 0, se recibió: {total}"
+            )
+        if iteration < 0 or iteration > total:
+            raise ValueError(
+                f"'iteration' debe estar entre 0 y {total}, se recibió: {iteration}"
+            )
+
         percent = f"{100 * (iteration / float(total)):.1f}"
         filled_length = int(length * iteration // total)
         progress_bar = '█' * filled_length + '-' * (length - filled_length)
