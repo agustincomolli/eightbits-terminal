@@ -162,7 +162,7 @@ class Tabular:
             widths (list): Lista con los anchos de las columnas.
         """
         total_row_length = sum(widths) + 3 * (columns_count - 1)
-        Output.print(f"+-{'-' * total_row_length}-+")
+        Output.print(f"+-{'-' * total_row_length}-+", fill=False)
 
     @staticmethod
     def _print_row(row: dict, columns_width: dict, is_header: bool = False):
@@ -193,12 +193,12 @@ class Tabular:
 
         # Imprimir cada línea
         for line_num in range(max_lines):
-            Output.print("|", end="")
+            Output.print("|", end="", fill=False)
             for key, width in columns_width.items():
                 # Obtener la línea actual o espacios en blanco si no hay más contenido
                 if line_num < len(wrapped_content[key]):
                     value = wrapped_content[key][line_num]
                 else:
                     value = ""
-                Output.print(f" {value:<{width}} |", end="")
-            Output.print()
+                Output.print(f" {value:<{width}} |", end="", fill=False)
+            Output.print("", fill=False)

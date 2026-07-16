@@ -8,6 +8,8 @@ Contenido
 import os
 import subprocess
 import time
+import sys
+from typing import TextIO
 from .colors import Colors
 from .alignment import Alignment
 
@@ -23,38 +25,72 @@ class Output:
     @staticmethod
     def print(*objects: object, sep: str = ' ', end: str = '\n',
               color: str = Colors.DEFAULT, alignment: str = Alignment.LEFT,
-              width: int = 0) -> None:
+              width: int = 0, fill: bool = True, file: TextIO = sys.stdout,
+              flush: bool = False) -> None:
         """Imprime objetos con un color y alineación específicos.
 
+        Funciona como el print() estándar de Python (acepta sep, end, file y
+        flush con el mismo significado), pero además permite aplicar color y
+        alinear el texto al ancho de la consola.
+
         Args:
-            *objects (object): Uno o más objetos a imprimir.
+            *objects (object): Uno o más objetos a imprimir. Se convierten a
+                str() igual que hace el print() estándar.
             sep (str, optional): Separador entre objetos. Por defecto es ' '.
-            end (str, optional): Cadena final al terminar la impresión. Por defecto es '\n'.
-            color (str, optional): Color a aplicar al texto.
-            alignment (str, optional): Alineación del texto ('left', 'center', 'right').
-            width (int, optional): Ancho para la alineación. Si es 0, usa la terminal.
+            end (str, optional): Cadena final al terminar la impresión.
+                Por defecto es '\n'.
+            color (str, optional): Color a aplicar al texto (ver clase Colors).
+            alignment (str, optional): Alineación del texto ('left', 'center',
+                'right').
+            width (int, optional): Ancho para la alineación. Si es 0, usa el
+                ancho actual de la terminal.
+            fill (bool, optional): Si es False, no aplica relleno/alineación al
+                ancho de la terminal, y el texto se imprime tal cual. Útil para
+                imprimir fragmentos de una misma línea (por ejemplo, celdas de
+                una tabla) sin que cada fragmento se estire hasta el ancho de la
+                consola. Por defecto es True.
+            file (TextIO, optional): Stream donde escribir, igual que en el
+                print() estándar. Por defecto es sys.stdout. Pasar sys.stderr
+                para separar mensajes de error/diagnóstico de la salida normal
+                del programa, o un io.StringIO() para capturar la salida en
+                tests sin tocar la consola real.
+            flush (bool, optional): Si es True, fuerza el vaciado inmediato del
+                buffer de salida, igual que en el print() estándar. Por defecto
+                es False.
         """
-        # 1. Validar color y alineación
+        # 1. Validar color y alineación (si no son válidos, se usan los
+        #    valores por defecto de cada clase)
         color = Colors.validate_color(color)
         alignment = Alignment.validate_alignment(alignment)
 
-        # 2. Unir los objetos usando el separador 'sep'
+        # 2. Unir todos los objetos recibidos en un solo string, igual que hace
+        #    internamente el print() estándar con el parámetro 'sep'
         full_text = sep.join(str(obj) for obj in objects)
 
-        # 3. Aplicar color al texto completo ya unido
+        # 3. Envolver el texto ya unido con los códigos ANSI del color elegido
         text_color = Colors.colorize(full_text, color)
 
-        # 4. Calcular ancho de la pantalla
+        # 4. Si no se pide relleno, escribir el texto coloreado tal cual, sin
+        #    alinear ni rellenar con espacios, y terminar acá
+        if not fill:
+            print(text_color, end=end, file=file, flush=flush)
+            return
+
+        # 5. Si no se especificó un ancho, usar el ancho actual de la consola
+        #    (se recalcula en cada llamada por si la terminal cambió de tamaño)
         if width == 0:
             width = Output.console_size()[0]
 
-        # 5. Alinear e imprimir aplicando el parámetro 'end'
+        # 6. Alinear el texto ya coloreado dentro de ese ancho y escribirlo en
+        #    el stream indicado (file), respetando 'end' y 'flush'
         if alignment == Alignment.CENTER:
-            print(text_color.center(width), end=end)
+            aligned_text = text_color.center(width)
         elif alignment == Alignment.RIGHT:
-            print(text_color.rjust(width), end=end)
+            aligned_text = text_color.rjust(width)
         else:
-            print(text_color.ljust(width), end=end)
+            aligned_text = text_color.ljust(width)
+
+        print(aligned_text, end=end, file=file, flush=flush)
 
     @staticmethod
     def clear() -> None:
@@ -84,12 +120,23 @@ class Output:
 
     @staticmethod
     def error(message: str) -> None:
-        """Muestra un mensaje de error.
+        """Muestra un mensaje de error en rojo.
+
+        El mensaje se envía a sys.stderr (no a sys.stdout) porque
+        semánticamente es un error, no salida normal del programa. En una
+        terminal común esto no cambia nada visualmente: el mensaje se sigue
+        viendo igual, mezclado con el resto de la salida. La diferencia solo
+        se nota si alguien redirige la salida normal a un archivo (por
+        ejemplo `python script.py > salida.txt`): en ese caso el archivo
+        queda limpio y el error se sigue mostrando en la pantalla.
 
         Args:
-            message (str): Mensaje de error.
+            message (str): Mensaje de error a mostrar.
         """
-        Output.print(message, Colors.RED)
+        # OJO: color se pasa como keyword argument, no posicional. Output.print
+        # recibe *objects primero, así que un Colors.RED posicional se
+        # interpretaría como "otro objeto a imprimir" y no como el color.
+        Output.print(message, color=Colors.RED, file=sys.stderr)
 
     @staticmethod
     def warning(message: str) -> None:
