@@ -5,51 +5,56 @@ Para ejecutar el ejemplo, ejecutar python -m examples.demo.
 """
 import time
 from datetime import datetime
-from src.eightbits import Input, Output, Colors, Alignment, Tabular
+from src.eightbits import Input, Output, Colors, Alignment, Tabular, Format
 
 
 def main() -> None:
     """ Función principal del módulo. """
     # Entrada de datos
     name = Input.text("Ingresa tu nombre: ", Colors.GREEN, Colors.BLUE)
-    Output.print(name, Colors.WHITE)
+    Output.print(name, color=Colors.WHITE)
 
     age = Input.integer("Ingresa tu edad: ",
                            Colors.GREEN, Colors.BLUE, 1, 99)
-    Output.print(age, Colors.WHITE)
+    Output.print(age, color=Colors.WHITE)
 
     weight = Input.float(
         "Ingresa tu peso: ", Colors.GREEN, Colors.BLUE, 50, 150)
-    Output.print(weight, Colors.WHITE)
+    Output.print(weight, color=Colors.WHITE)
 
     next_step = Input.confirm(
         "¿Deseas continuar? (si/no): ", Colors.GREEN, Colors.BLUE)
-    Output.print(next_step, Colors.WHITE)
+    Output.print(next_step, color=Colors.WHITE)
 
     date_birth = Input.date("Ingresa tu fecha de nacimiento: ",
                             Colors.GREEN, Colors.BLUE)
-    Output.print(date_birth, Colors.WHITE)
+    Output.print(date_birth, color=Colors.WHITE)
 
     email = Input.email("Ingresa tu email: ", Colors.GREEN, Colors.BLUE)
-    Output.print(email, Colors.WHITE)
+    Output.print(email, color=Colors.WHITE)
 
     password = Input.password("Ingresa tu contraseña: ",
                               Colors.GREEN, Colors.BLUE)
-    Output.print(password, Colors.WHITE)
+    Output.print(password, color=Colors.WHITE)
 
     choice = Input.choice("Selecciona una opción: ",
                         ["Opción 1", "Opción 2", "Opción 3"],
                         Colors.GREEN, Colors.BLUE)
-    Output.print(choice, Colors.WHITE)
+    Output.print(choice, color=Colors.WHITE)
 
     # Salida formateada
     Output.warning("Esto es un mensaje de advertencia.")
     Output.error("Esto es un mensaje de error.")
     Output.confirm("Esto es un mensaje de confirmación.")
     Output.clear()
-    Output.print("Esto es un mensaje de limpieza.", Colors.RED)
-    Output.set_locale("es_AR")
-    Output.print(f"Mi sueldo es de {Output.format_currency(367000)}", Colors.GREEN)
+    Output.print("Esto es un mensaje de limpieza.", color=Colors.RED)
+
+    # Formateo (clase Format, separada de Output)
+    Format.set_locale("es_AR.UTF-8")
+    Output.print(
+        f"Mi sueldo es de {Format.currency_number(367000)}",
+        color=Colors.GREEN
+    )
 
     # Alineación de texto
     Output.print("Texto alineado a la izquierda")
@@ -86,13 +91,25 @@ def main() -> None:
     Output.typewriter("Esto es un efecto de máquina de escribir.")
 
     # Formateo de números
-    Output.print(f"Número entero formateado: {Output.format_int(1000)}", Colors.WHITE)
-    Output.print(f"Número decimal formateado: {Output.format_float(1234.56)}", Colors.WHITE)
-    Output.print(f"Porcentaje formateado: {Output.format_percentage(99.99)}", Colors.WHITE)
+    Output.print(
+        f"Número entero formateado: {Format.integer_number(1000)}",
+        color=Colors.WHITE
+    )
+    Output.print(
+        f"Número decimal formateado: {Format.float_number(1234.56)}",
+        color=Colors.WHITE
+    )
+    Output.print(
+        f"Porcentaje formateado: {Format.percentage_number(99.99)}",
+        color=Colors.WHITE
+    )
 
     # Formateo de fecha
     current_date = datetime.now()
-    Output.print(f"Fecha formateada: {Output.format_date(current_date)}", Colors.WHITE)
+    Output.print(
+        f"Fecha formateada: {Format.date(current_date)}",
+        color=Colors.WHITE
+    )
 
     # Título con subrayado
     Output.print_title("Esto es un título", Colors.GREEN, "=", Alignment.CENTER)

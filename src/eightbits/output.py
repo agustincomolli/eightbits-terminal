@@ -9,7 +9,7 @@ import os
 import subprocess
 import time
 import sys
-from typing import TextIO
+from typing import Optional, TextIO
 from .colors import Colors
 from .alignment import Alignment
 
@@ -25,7 +25,7 @@ class Output:
     @staticmethod
     def print(*objects: object, sep: str = ' ', end: str = '\n',
               color: str = Colors.DEFAULT, alignment: str = Alignment.LEFT,
-              width: int = 0, fill: bool = True, file: TextIO | None = None,
+              width: int = 0, fill: bool = True, file: Optional[TextIO] = None,
               flush: bool = False) -> None:
         """Imprime objetos con un color y alineación específicos.
 
