@@ -148,8 +148,11 @@ def test_print_separator(capsys):
 
     output = capsys.readouterr().out.strip()
 
-    assert output.startswith("+-")
-    assert output.endswith("-+")
+    # El texto ahora viene envuelto en códigos ANSI (incluso con el color
+    # por defecto), así que buscamos el contenido en vez de comparar el
+    # string completo desde el principio/final.
+    assert "+-" in output
+    assert "-+" in output
     assert "-" in output
 
 

@@ -84,7 +84,7 @@ class Format:
             date (datetime.date): Objeto date a formatear
             custom_locale (str): Locale específico a usar (opcional)
             short_format (bool): True para formato corto (20/02/2025), False para 
-            formato largo (20 de febrero de 2025)
+            formato largo (20 febrero 2025)
 
         Returns:
             str: Fecha formateada según el locale y formato especificado
@@ -105,8 +105,8 @@ class Format:
                 # %x: formato de fecha corto según el locale
                 return date.strftime("%x")
 
-            # Formato largo: "20 de febrero de 2025"
-            return date.strftime("%d de %B de %Y").lower()
+            # Formato largo: "20 febrero 2025"
+            return date.strftime("%d %B %Y").lower()
 
         finally:
             # Restaurar el locale original si se cambió
